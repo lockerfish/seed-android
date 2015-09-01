@@ -1,13 +1,44 @@
 android + Firebase Seed App
 =========================
 
-This is a seed application to help you get started building apps with [android](<platform-link>) and Firebase.
+This is a seed application to help you get started building apps with [Android](https://www.android.com/) and Firebase.
+Using [FirebaseUI-Android](https://github.com/firebase/FirebaseUI-Android/) this app implements a `ListView` of messages (automatically synchronized with the data in
+the Firebase database), log in with email and password and the ability to add new messages.
 
-## [Getting Started](<docs-link>)
+## Getting Started
+
+> For a general introduction, see the documentation on [programming Android apps using Firebase](https://www.firebase.com/docs/android/).
+
+Clone this repo to your local machine:
+
+```
+git clone git@github.com:firebase/seed-android.git
+```
+
+Open the directory in Android Studio.
+
+If you are missing any build tools, SDKs or other dependencies, Android Studio will tell you about it.
+
+![Android Studio missing SDK and build-tools]()
+
+Accept all its suggestions and your Android Studio should look like this:
+
+![Android Studio with app and Gradle Scripts nodes]
+
+Open `app/java/com.firebasedemo.seedap/MainActivity.java` and change line xxx to point to your own Firebase Database.
 
 ## Running your app
 
+Run the seed app by clicking the "Run 'app'" button in the toolbar (or by pressing ctrl-R on the keyboard).
+
+You can run the app in physical Android device or in an emulator that runs on your machine.
+The app will run on Android Gingerbread (2.3.3, API level 10) or up.
+
+![The app in on a Nexus 9, with its login screen showing]()
+
 ## How it Works
+
+If you want to learn how to build this application from scratch yourself, take our [FirebaseUI for Android codelab](https://github.com/firebase/FirebaseUI-Android/tree/master/codelabs/chat).
 
 ## Testing your app
 
