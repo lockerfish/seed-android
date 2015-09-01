@@ -1,7 +1,7 @@
-${platform} + Firebase Seed App
+android + Firebase Seed App
 =========================
 
-This is a seed application to help you get started building apps with [${platform}](<platform-link>) and Firebase.
+This is a seed application to help you get started building apps with [android](<platform-link>) and Firebase.
 
 ## [Getting Started](<docs-link>)
 
@@ -35,7 +35,7 @@ Additional information on the community, help, or support can be found on our [h
 
 ### Contributing
 
-We'd love to accept your sample apps and patches! Before we can take them, we a few business items to take care of including our CLA and an overview of our contribution process. Please view [CONTRIBUTING.md](https://github.com/firebase/seed-${platform}/blob/master/CONTRIBUTING.md) for more information.
+We'd love to accept your sample apps and patches! Before we can take them, we a few business items to take care of including our CLA and an overview of our contribution process. Please view [CONTRIBUTING.md](https://github.com/firebase/seed-android/blob/master/CONTRIBUTING.md) for more information.
 
 1. Submit an issue describing your proposed change to the repo in question.
 1. The repo owner will respond to your issue promptly.
