@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -21,6 +23,8 @@ public class MainActivity extends ActionBarActivity implements Firebase.AuthStat
 
     private Firebase mFirebaseRef;
     private String mUsername;
+    private Button mSendButton;
+    private EditText mTextEdit;
     private FirebaseListAdapter<Message> mFirebaseAdapter;
 
     @Override
@@ -28,9 +32,24 @@ public class MainActivity extends ActionBarActivity implements Firebase.AuthStat
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Create a reference to a location in our Firebase Database that stores the chat messages
         mFirebaseRef = new Firebase("https://<your-firebase-app>.firebaseio.com/messages");
+
+        mTextEdit = (EditText) findViewById(R.id.text_edit);
+
+        // When the user clicks the Send button, we call onSendButtonClick()
+        mSendButton = (Button) findViewById(R.id.send_button);
+        mSendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MainActivity.this.onSendButtonClick();
+            }
+        });
+
+        // Whenever the authentication state changes, our onAuthStateChanged method will be called
         mFirebaseRef.addAuthStateListener(this);
 
+        // Create an object that adapts the messages from the Firebase Database into Views for the ListView
         mFirebaseAdapter = new FirebaseListAdapter<Message>(this, Message.class, android.R.layout.two_line_list_item, mFirebaseRef) {
             @Override
             protected void populateView(View view, Message message) {
@@ -38,13 +57,14 @@ public class MainActivity extends ActionBarActivity implements Firebase.AuthStat
                 ((TextView)view.findViewById(android.R.id.text2)).setText(message.getText());
             }
         };
-
         ((ListView)findViewById(R.id.messages_list)).setAdapter(mFirebaseAdapter);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
+        // Tell the adapter to close its connection to Firebase
         mFirebaseAdapter.cleanup();
     }
 
@@ -74,6 +94,7 @@ public class MainActivity extends ActionBarActivity implements Firebase.AuthStat
         int id = item.getItemId();
 
         if (id == R.id.action_auth) {
+            // Build a dialog where the user enters their email and password
             new AlertDialog.Builder(MainActivity.this)
                     .setMessage(R.string.login_message)
                     .setTitle(R.string.login_label)
@@ -85,6 +106,7 @@ public class MainActivity extends ActionBarActivity implements Firebase.AuthStat
                             final String email = ((TextView)dlg.findViewById(R.id.email)).getText().toString();
                             final String password =((TextView)dlg.findViewById(R.id.password)).getText().toString();
 
+                            // Use the email and password to create and/or authenticate the user
                             mFirebaseRef.createUser(email, password, new Firebase.ResultHandler() {
                                 @Override
                                 public void onSuccess() {
@@ -109,6 +131,15 @@ public class MainActivity extends ActionBarActivity implements Firebase.AuthStat
 
         return super.onOptionsItemSelected(item);
     }
+
+    private void onSendButtonClick() {
+        // Create a message object out of the username and the message the user entered
+        Message message = new Message(mUsername, mTextEdit.getText().toString());
+
+        // Create a new message in the Firebase Database and with the values
+        mFirebaseRef.push().setValue(message);
+    }
+
 
     @Override
     public void onAuthStateChanged(AuthData authData) {
