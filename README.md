@@ -5,6 +5,8 @@ This is a seed application to help you get started building apps with [Android](
 Using [FirebaseUI-Android](https://github.com/firebase/FirebaseUI-Android/) this app implements a `ListView` of messages (automatically synchronized with the data in
 the Firebase database), log in with email and password and the ability to add new messages.
 
+![The app in on a Nexus 9, with its login screen showing](screenshots/nexus9-screenshot.png)
+
 ## Getting Started
 
 > For a general introduction, see the documentation on [programming Android apps using Firebase](https://www.firebase.com/docs/android/).
@@ -19,13 +21,13 @@ Open the directory in Android Studio.
 
 If you are missing any build tools, SDKs or other dependencies, Android Studio will tell you about it.
 
-![Android Studio missing SDK and build-tools]()
+![Android Studio missing SDK and build-tools](screenshots/android-studio-missing-tools.png)
 
 Accept all its suggestions and your Android Studio should look like this:
 
-![Android Studio with app and Gradle Scripts nodes]
+![Android Studio with app and Gradle Scripts nodes](screenshots/android-studio-loaded.png)
 
-Open `app/java/com.firebasedemo.seedap/MainActivity.java` and change line xxx to point to your own Firebase Database.
+Open `app/java/com.firebasedemo.seedap/MainActivity.java` and change line 31 to point to your own Firebase Database.
 
 ## Running your app
 
@@ -34,11 +36,36 @@ Run the seed app by clicking the "Run 'app'" button in the toolbar (or by pressi
 You can run the app in physical Android device or in an emulator that runs on your machine.
 The app will run on Android Gingerbread (2.3.3, API level 10) or up.
 
-![The app in on a Nexus 9, with its login screen showing]()
+![The app in on a Nexus 9, with its login screen showing](screenshots/nexus9-screenshot.png)
 
 ## How it Works
 
-If you want to learn how to build this application from scratch yourself, take our [FirebaseUI for Android codelab](https://github.com/firebase/FirebaseUI-Android/tree/master/codelabs/chat).
+> If you want to learn how to build this application from scratch yourself, take our [FirebaseUI for Android codelab](https://github.com/firebase/FirebaseUI-Android/tree/master/codelabs/chat).
+
+This app is built using FirebaseUI for Android, which in turn is built on top of the Firebase SDK for Android.
+
+It uses a `FirebaseListAdapter` to adapt messages in the Firebase Database to a `ListView` in the app.
+
+The app uses the Firebase SDK for Android to create a reference to the Firebase Database and to send new message to the database.
+
+### Email & password authentication
+
+This app makes use of Firebase's [email & password authentication](https://www.firebase.com/docs/web/guide/login/password.html).
+To enable email & password auth, navigate to the "Login & Auth" tab in your Firebase app dashboard and select "Enable Email & Password Authentication".
+
+Once it's enabled, you're ready to start creating and authenticating users in your app.
+The app creates users with `Firebase.createUser()` method from the Firebase SDK for Android, passing it an email and password.
+It uses `Firebase.authWithPassword()` to log users in, and `Firebase.unauth()` to log users out.
+This app also makes use of `Firebase.AuthStateListener` to check the user's authentication state and set `mUserName` to the current user.
+
+Firebase also supports authentication with Facebook, Twitter, GitHub, Google, anonymous auth, and custom authentication. Check out the docs on user authentication for details on these authentication methods.
+
+Adding messages to a synchronized array
+
+This app uses the `FirebaseListAdapter` from the FirebaseUI library for Android to synchronize message data from the Firebase database to our app.
+Using `FirebaseListAdapter`, our local `ListView` is kept in sync with our remote Firebase data.
+To add items to the database, the app uses `Firebase.push()` and `Firebase.setValue()`.
+Check out the Firebase for Android documentation for more details on how this works.
 
 ## Testing your app
 

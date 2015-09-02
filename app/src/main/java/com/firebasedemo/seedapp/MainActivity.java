@@ -28,7 +28,7 @@ public class MainActivity extends ActionBarActivity implements Firebase.AuthStat
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mFirebaseRef = new Firebase("https://firebaseui.firebaseio.com/chat");
+        mFirebaseRef = new Firebase("https://<your-firebase-app>.firebaseio.com/messages");
         mFirebaseRef.addAuthStateListener(this);
 
         mFirebaseAdapter = new FirebaseListAdapter<Message>(this, Message.class, android.R.layout.two_line_list_item, mFirebaseRef) {
