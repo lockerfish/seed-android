@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Firebase seed app</string>
+
+    <string name="email_label">Email</string>
+    <string name="password_label">Password</string>
+    <string name="login_label">Log in</string>
+    <string name="login_message">Enter your email address and password</string>
+    <string name="auth_error_title">Login failed</string>
+</resources>
