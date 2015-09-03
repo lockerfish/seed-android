@@ -31,7 +31,7 @@ Open `app/java/com.firebasedemo.seedap/MainActivity.java` and change line 31 to 
 
 ## Running your app
 
-Run the seed app by clicking the "Run 'app'" button in the toolbar (or by pressing ctrl-R on the keyboard).
+Run the seed app by clicking the "Run 'app'" button in the toolbar (or by pressing `ctrl-R` on the keyboard).
 
 You can run the app in physical Android device or in an emulator that runs on your machine.
 The app will run on Android Gingerbread (2.3.3, API level 10) or up.
@@ -67,15 +67,50 @@ Using `FirebaseListAdapter`, our local `ListView` is kept in sync with our remot
 To add items to the database, the app uses `Firebase.push()` and `Firebase.setValue()`.
 Check out the Firebase for Android documentation for more details on how this works.
 
-## Testing your app
+#### Adding messages
+This app makes use of an `TextEdit` for text input, and uses the `push()` and `setValue()` methods to push messages to the `/messages` node of your Firebase database.
+These messages are of the form:
+
+```
+{
+  email: 'email@domain.com',
+  text: 'Literally cronut post-ironic, shabby chic distillery PBR&B.'
+}
+```
+
+For more information on saving data to Firebase, check out our [saving data docs](https://www.firebase.com/docs/android/guide/saving-data.html).
+
+#### Displaying messages
+This app makes use of [FirebaseUI](https://github.com/firebase/FirebaseUI-Android) to bind a Firebase database reference to a `ListView`.
+
+It overrides the `populateView()` method of the `FirebaseListAdapter` to populate the sub-views of an `android.R.layout.two_line_list_item`.
+
+More information is available in the [Firebase docs](https://www.firebase.com/docs/android/guide/retrieving-data.html) and in the regular Firebase [retrieving data docs](https://www.firebase.com/docs/ios/guide/retrieving-data.html).
 
 ## Securing your app
+Copy and paste the contents of `rules.json` into the Security & Rules tab of your Firebase App Dashboard.
+
+`rules.json` has two basic security rules. The first ensures that only logged in users can add messages to the list:
+
+` ".write": "auth != null"`
+
+The second rule ensures that new messages are not empty:
+
+`".validate": "newData.hasChildren(['email', 'text'])"`
+
+`.validate` rules are run after `.write` rules succeed. You can see the full rules in the `rules.json` file.
+
+For more details on security rules, check out the [security quickstart](https://www.firebase.com/docs/security/quickstart.html) in our documentation.
 
 ## Deploying your app
-
-## Debugging your app
+For more information on deploying your app to the Google Play Store, check out the [Google Play site](http://developer.android.com/distribute/googleplay/index.html).
 
 ## Repo Structure
+The top level of the repo contains project metadata, including the `README`, `CONTRIBUTORS`, and `LICENSE`.
+
+Additionally, it contains all of the source code for the project.
+
+`rules.json` contains the security rules for the project. For more information, see the [Securing your App](https://github.com/firebase/seed-android#securing-your-app) section of this README.
 
 ## Next Steps
 
